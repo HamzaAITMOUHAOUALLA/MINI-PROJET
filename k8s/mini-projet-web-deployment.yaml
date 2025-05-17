@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mini-projet-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mini-projet-web
+  template:
+    metadata:
+      labels:
+        app: mini-projet-web
+    spec:
+      containers:
+      - name: mini-projet-web
+        image: mini-projet-web:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_HOST
+          value: mysql-service
+        - name: DB_NAME
+          value: marketgo_db
+        - name: DB_USER
+          value: marketgo_user
+        - name: DB_PASSWORD
+          value: marketgo_pass
