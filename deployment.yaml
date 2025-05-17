@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mini-projet-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mini-projet
+  template:
+    metadata:
+      labels:
+        app: mini-projet
+    spec:
+      containers:
+      - name: mini-projet
+        image: hamza399/mini-projet:latest
+        ports:
+        - containerPort: 8000
