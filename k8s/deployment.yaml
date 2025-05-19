@@ -1,0 +1,39 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mini-projet-web
+  namespace: mini-projet-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mini-projet-web
+  template:
+    metadata:
+      labels:
+        app: mini-projet-web
+    spec:
+      containers:
+        - name: mini-projet-web
+          image: hamza399/mini-projet:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              echo "🧭 Attente que le nom DNS de MySQL soit résolu...";
+              until getent hosts mysql-service; do
+                echo "❌ DNS pas encore prêt. Attente...";
+                sleep 2;
+              done;
+
+              echo "✅ DNS résolu. Vérification du port 3306 avec /dev/tcp...";
+              while ! timeout 1 bash -c "</dev/tcp/mysql-service/3306" 2>/dev/null; do
+                echo "⏳ Port MySQL pas encore prêt. Attente...";
+                sleep 2;
+              done;
+
+              echo "🚀 Lancement de Django...";
+              python manage.py migrate && python manage.py runserver 0.0.0.0:8000

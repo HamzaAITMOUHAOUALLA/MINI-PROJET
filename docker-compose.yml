@@ -1,4 +1,5 @@
-version: '3.8'
+
+
 
 services:
   db:
@@ -10,7 +11,7 @@ services:
       MYSQL_PASSWORD: marketgo_pass
       MYSQL_ROOT_PASSWORD: rootpass
     ports:
-      - "3306:3306"
+      - "3307:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s

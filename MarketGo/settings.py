@@ -1,3 +1,4 @@
+
 """
 python
 import pymysql
@@ -94,16 +95,18 @@ pymysql.install_as_MySQLdb()
 
 
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'marketgo_db',
         'USER': 'marketgo_user',
         'PASSWORD': 'marketgo_pass',
-        'HOST': 'db',  # Correspond au nom du service dans docker-compose.yml
+        'HOST': 'mysql-service',  # Bien le nom du service Kubernetes MySQL
         'PORT': '3306',
     }
 }
+
 
 
 # Password validation
